@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 
-export default function Dashboard() {
+export default function Home() {
 
   const [pickup, setPickup] = useState("");
   const [drop, setDrop] = useState("");
@@ -9,10 +9,10 @@ export default function Dashboard() {
 
   const requestRide = async () => {
 
-    const res = await fetch("/api/rides/request", {
+    const res = await fetch("http://localhost:3001/rides/request", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         pickupAddress: pickup,
@@ -34,53 +34,47 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-10">
+    <div style={{fontFamily:"Arial", padding:"40px"}}>
 
-      <h1 className="text-3xl font-bold mb-8 text-center">
-        🚖 Labmentix Ride Dashboard
-      </h1>
+      <h1>🚖 Labmentix Ride Dashboard</h1>
 
-      <div className="bg-white p-6 rounded-xl shadow-md max-w-xl mx-auto">
+      <div style={{marginTop:"30px"}}>
 
-        <h2 className="text-xl font-semibold mb-4">
-          Request a Ride
-        </h2>
+        <h2>Request Ride</h2>
 
         <input
-          className="w-full border p-3 rounded mb-3"
           placeholder="Pickup Location"
           value={pickup}
           onChange={(e)=>setPickup(e.target.value)}
+          style={{padding:"10px",marginRight:"10px"}}
         />
 
         <input
-          className="w-full border p-3 rounded mb-3"
           placeholder="Drop Location"
           value={drop}
           onChange={(e)=>setDrop(e.target.value)}
+          style={{padding:"10px",marginRight:"10px"}}
         />
 
         <button
           onClick={requestRide}
-          className="w-full bg-black text-white p-3 rounded hover:bg-gray-800"
+          style={{padding:"10px",background:"black",color:"white"}}
         >
           Request Ride
         </button>
 
       </div>
 
-      <div className="max-w-xl mx-auto mt-10">
+      <div style={{marginTop:"40px"}}>
 
-        <h2 className="text-xl font-semibold mb-4">
-          Your Rides
-        </h2>
+        <h2>Your Rides</h2>
 
-        {rides.length === 0 && (
-          <p className="text-gray-500">No rides yet</p>
-        )}
-
-        {rides.map((ride,index)=>(
-          <div key={index} className="bg-white p-4 rounded shadow mb-3">
+        {rides.map((ride,i)=>(
+          <div key={i} style={{
+            border:"1px solid #ddd",
+            padding:"15px",
+            marginTop:"10px"
+          }}>
 
             <p><b>Pickup:</b> {ride.pickupAddress}</p>
             <p><b>Drop:</b> {ride.dropAddress}</p>
